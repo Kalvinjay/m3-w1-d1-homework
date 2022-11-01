@@ -4,7 +4,6 @@ var hostname = 'localhost';
 var port = 5000;
 
 var servertask1 = http.createServer((req, res) => {
-    // console.log(req,headers)ç
     if (req.url == "/") {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
