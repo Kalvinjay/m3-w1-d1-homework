@@ -5,12 +5,12 @@ var fs = require ('fs');
 var hostname = 'localhost';
 var port = 5000;
 
-var servertask2 = http.createServer((req, res)=>{
-    console.log(`request for ${req.url} by method ${req.method}`);
+var servertask2 = http.createServer(function(req, res){
+    console.log(`Request for ${req.url} by method ${req.method}`);
 
     if (req.method === 'GET') {
         var fileUrl = req.url;
-        if (file.Url = '/') {
+        if (fileUrl === '/') {
             fileUrl = '/home.html';
         }
 
@@ -18,18 +18,17 @@ var servertask2 = http.createServer((req, res)=>{
         var fileExt = path.extname(filePath);
 
         if (fileExt === 'html') {
-            fs.access(filePath, function(err) {
-                if(err) {
+            fs.access(filePath, function(err){
+                if (err) {
                     res.statusCode = 404;
                     res.setHeader('Content-Type', 'text/html');
                     res.end(`<html><body><h1>Error 404; ${fileUrl} not found</h1></body></html>`);
-
                     return;
                 }
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'text/html');
                 fs.createReadStream(filePath).pipe(res);
-            })
+            });
         } else {
             res.statusCode = 404;
             res.setHeader('Content-Type', 'text/html');
